@@ -32,6 +32,7 @@ addExpr(1, 2, 3, 4, 5, 6)
 
 // It's a misconception that all values declared with const are immutable.
 // It's only true for primitive types and not for reference types.
+// This is because while changing the object, we are not changing the heap reference.
 
 // Reference types ==> Objects can be very large, hence they are stored in heap memory
 // While primitive types are stored directly in the variable environment.
@@ -44,7 +45,8 @@ console.log(age, oldAge)
 
 const me = {
   name: 'Gagandeep',
-  age: 22
+  age: 22,
+  family: ['A', 'B', 'C']
 }
 
 const friend = me
@@ -77,3 +79,12 @@ D30F            { name: 'Gagandeep', age = 24 }
   Event Loop
   How DOM really works
 */
+
+const meCopy = Object.assign({}, me)
+
+meCopy.age = 35
+// Note: It's important that while using Object.assign we use empty object as the
+// target to ensure that a new object is created.
+// Object.assign only does a shallow copy 
+meCopy.family.push('Z')
+console.log({ me, meCopy, friend })
